@@ -75,8 +75,8 @@ int main(int argc, char **argv) {
             fprintf (stderr, help, argv[0]);
             return -1;
         }
-        if(min>=9999999 || max>=9999999) {
-            printf("Maksymalna wartosc na krawedziach grafu to 9999999\n");
+        if(min>=INT_MAX || max>=INT_MAX) {
+            printf("Maksymalna wartosc na krawedziach grafu to INT_MAX\n");
             fprintf (stderr, help, argv[0]);
             return -1;
         }
@@ -133,7 +133,6 @@ int main(int argc, char **argv) {
         fprintf(stderr, help, argv[0]);
         return -1;
     }
-
     
     return 0;
 }

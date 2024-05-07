@@ -49,7 +49,7 @@ void dijkstra(graph_t* gr, int n, int da, int db) { // n = rows*columns
             add_to_pq(queue, dij[i]);
         }
         else
-            dij[i].odl = 999999999;
+            dij[i].odl = INT_MAX;
     }
     
     queue_elem_t tmp;
