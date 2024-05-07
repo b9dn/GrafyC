@@ -8,7 +8,7 @@
 
 int bfs(graph_t* gr,int height,int width) {
     pq_t pq = init_pq(SIZE);
-    d_t* visited = malloc(sizeof(d_t) * height*width);
+    queue_elem_t* visited = malloc(sizeof(queue_elem_t) * height*width);
     visited[0].odl = 0;
     visited[0].k = 0;
     visited[0].p = 0;
@@ -18,7 +18,7 @@ int bfs(graph_t* gr,int height,int width) {
         visited[k].p = -1;
     }
 
-    d_t i;
+    queue_elem_t i;
     while(not_empty_pq( pq )) {
         i = pop_from_pq(pq);
         for(int j = 0; j < 4; j++) {

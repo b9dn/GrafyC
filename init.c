@@ -5,16 +5,15 @@
 #include "init.h"
 
 double losuj(int a, int b) {
-    double wylosowana = (double)rand() / RAND_MAX * (b-a) + a;
-    return wylosowana;
+    return (double)rand() / RAND_MAX * (b-a) + a;
 }
 
 int czy_bylo(graph_t* gr, int i, int j, int nr_wezla) {
-	for(int k = 0; k < j; k++) {
-		if(gr[i].edg[k]->node == nr_wezla)
-			return 1;
-	}
-	return 0;
+    for(int k = 0; k < j; k++) {
+        if(gr[i].edg[k]->node == nr_wezla)
+            return 1;
+    }
+    return 0;
 }
 
 void gr_intro(graph_t* gr, int rows, int columns) {
@@ -65,8 +64,8 @@ graph_t* graph_read(char *file, int* height, int* width) {
                         && czy_bylo(gr, i, j, a) == 0 && gr[i].val_edg[j] > 0 
                         && gr[i].val_edg[j] < 9999999) {
                 if(a-columns == i || a+columns == i || //spr czy mozliwe polaczenia
-                  (a+1 == i && curr_col-1 < columns) || 
-                  (a-1 == i && curr_col+1 > 1)) {
+                    (a+1 == i && curr_col-1 < columns) || 
+                    (a-1 == i && curr_col+1 > 1)) {
                         
                     gr[i].edg[j++] = &gr[a];
                     gr[i].nmb_edg++;
@@ -106,7 +105,6 @@ graph_t* graph_read(char *file, int* height, int* width) {
         curr_col++;
         i++;
         if(i >= columns*rows)  break;
-
     }
 
     free(str);
@@ -116,8 +114,8 @@ graph_t* graph_read(char *file, int* height, int* width) {
 
 graph_t* graph_init(int height, int width, double a, double b) { // a i b to przedzial losowania <a,b>
     graph_t* graf = malloc(sizeof(graph_t) *height*width);
-    int curr_row = 1;//aktualny wiersz
-    int curr_col = 1;//  -,,-   kolumna
+    int curr_row = 1; // aktualny wiersz
+    int curr_col = 1; //  -,,-   kolumna
 
     srand( time(NULL) );
     
@@ -127,13 +125,12 @@ graph_t* graph_init(int height, int width, double a, double b) { // a i b to prz
             curr_row++;
         }
 
-        graf[i].node = i;//ktory wezel
-        graf[i].nmb_edg = 0;//liczba krawedzi
-        graf[i].edg = malloc(sizeof(graph_t*) * 4);//wskazniki do innych wezlow
-        graf[i].val_edg = malloc(sizeof(double) * 4);//wartosci krawedzi
+        graf[i].node = i; // ktory wezel
+        graf[i].nmb_edg = 0; // liczba krawedzi
+        graf[i].edg = malloc(sizeof(graph_t*) * 4); // wskazniki do innych wezlow
+        graf[i].val_edg = malloc(sizeof(double) * 4); // wartosci krawedzi
 
-
-        if(i-width >= 0) { //sprawdza czy jest polaczenie w gore
+        if(i-width >= 0) { // sprawdza czy jest polaczenie w gore
             graf[i].nmb_edg++;
             graf[i].edg[0] = &(graf[i - width]);
             graf[i].val_edg[0] = losuj(a, b);	
@@ -144,7 +141,7 @@ graph_t* graph_init(int height, int width, double a, double b) { // a i b to prz
         }
 
         ////////////////////////////
-        if(i+1 < curr_row * width) { //w prawo
+        if(i+1 < curr_row * width) { // w prawo
             graf[i].nmb_edg++;
             graf[i].edg[1] = &(graf[i + 1]);
             graf[i].val_edg[1] = losuj(a, b);
@@ -155,7 +152,7 @@ graph_t* graph_init(int height, int width, double a, double b) { // a i b to prz
         }
 
         ////////////////////////////
-        if(i+width < width*height) { //w dol
+        if(i+width < width*height) { // w dol
             graf[i].nmb_edg++;
             graf[i].edg[2] = &(graf[i + width]);
             graf[i].val_edg[2] = losuj(a, b);
@@ -166,7 +163,7 @@ graph_t* graph_init(int height, int width, double a, double b) { // a i b to prz
         }
 
         ////////////////////////////
-        if(i-1 >= (curr_row - 1) * width) { //w lewo
+        if(i-1 >= (curr_row - 1) * width) { // w lewo
             graf[i].nmb_edg++;
             graf[i].edg[3] = &(graf[i - 1]);
             graf[i].val_edg[3] = losuj(a, b);
@@ -179,7 +176,6 @@ graph_t* graph_init(int height, int width, double a, double b) { // a i b to prz
         curr_col++;
 
     }
-    
     
     return graf;
 }

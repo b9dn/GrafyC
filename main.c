@@ -2,20 +2,21 @@
 #include <stdlib.h>
 #include <string.h>
 #include <getopt.h>
-#include <ctype.h>
 #include "init.h"
 #include "dijkstr.h"
 #include "bfs.h"
+
 char* help=
-    "POMOC:\n:"
-    "Najpierw nalezy wczytac graf z pliku lub go wygenerowac\n"
-    "Generowanie grafu: -g -a [ilosc wierszy(wysokosc)grafu] -b [ilosc kolumn(szerokosc)grafu]\n"
-    "-m [dolny zakres losowanych wartosci(nieujemne)] -n [gorny zakres losowanych wartosci(nieujemne)]\n"
-    "Wczytanie grafu z pliku: -i [nazwa pliku]\n"
-    "Zapisanie grafu do pliku: -o [nazwa pliku]\n"
-    "Sprawdzenie spojnosci grafu: -s\n"
-    "Wyznaczenie najkrotszej sciezki algorytmem dijkstry: -d -e[pierwszy wezel] -f [drugi wezel]\n"
-    "Wypisanie grafu: -p\n";
+    "\tPOMOC:\n"
+    "\tNajpierw nalezy wczytac graf z pliku lub go wygenerowac\n"
+    "\tGenerowanie grafu: -g -a [liczba wierszy (wysokosc) grafu] -b [liczba kolumn (szerokosc) grafu]\n"
+    "\t-m [dolny zakres losowanych wartosci (nieujemne)] -n [gorny zakres losowanych wartosci (nieujemne)]\n"
+    "\tWczytanie grafu z pliku: -i [nazwa pliku]\n"
+    "\tZapisanie grafu do pliku: -o [nazwa pliku]\n"
+    "\tSprawdzenie spojnosci grafu: -s\n"
+    "\tWyznaczenie najkrotszej sciezki algorytmem dijkstry: -d -e[pierwszy wezel] -f [drugi wezel]\n"
+    "\tWypisanie grafu: -p\n\n";
+
 int main(int argc, char **argv) {
     graph_t* gr=NULL;
     char *fout=NULL;
@@ -24,7 +25,7 @@ int main(int argc, char **argv) {
     double min=1, max=10;
     int fn=-1, sn=-1;
 
-    while((opt = getopt (argc, argv, "ga:b:m:n:o:i:de:f:sp")) != -1) {
+    while((opt = getopt(argc, argv, "ga:b:m:n:o:i:de:f:sp")) != -1) {
         switch(opt) {
             case 'g':
                 gflag=1;
@@ -107,7 +108,7 @@ int main(int argc, char **argv) {
         }	
         
     }		
-    else if(fin!=NULL) {		
+    else if(fin != NULL) {		
         graph_t* gr=graph_read(fin,&height,&width);
         if(gr==NULL)
             return -1;
@@ -115,16 +116,16 @@ int main(int argc, char **argv) {
         if(pflag==1)
             graph_print(gr,height,width);
         if(fout!=NULL)
-                graph_fwrite(fout,gr,height,width);
+            graph_fwrite(fout,gr,height,width);
         if(sflag==1)
-                bfs(gr,height,width);
+            bfs(gr,height,width);
         if(dflag==1) {
             if(fn>=height*width || sn>=height*width || fn<0 || sn<0 || fn==sn)
                 printf("Podano nieprawidlowe wezly dla algorytmu dijktstry\n");
             else
                 dijkstra(gr,height*width,fn,sn);
         }
-        graph_free(&gr,height,width);
+        graph_free(&gr, height, width);
         return 0;
     }
     else {

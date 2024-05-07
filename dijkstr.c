@@ -5,7 +5,7 @@
 #include "pq.h"
 #define SIZE 32
 
-static int dijkstra_ile_pol(d_t* dij, int da, int db) {
+static int dijkstra_ile_pol(queue_elem_t* dij, int da, int db) {
     int i = db;
     int j = 1;
     while(i != da) {
@@ -15,7 +15,7 @@ static int dijkstra_ile_pol(d_t* dij, int da, int db) {
     return j;
 }
 
-static void dijkstra_print(d_t* dij, int da, int db) {
+static void dijkstra_print(queue_elem_t* dij, int da, int db) {
 
     printf("Najkrotsza droga z wezla %i do %i:\n", da, db);
 
@@ -38,7 +38,7 @@ static void dijkstra_print(d_t* dij, int da, int db) {
 
 void dijkstra(graph_t* gr, int n, int da, int db) { // n = rows*columns
 
-    d_t dij[n];// tablica odleglosci i poprzednikow (p) od wezla da
+    queue_elem_t dij[n];// tablica odleglosci i poprzednikow (p) od wezla da
     pq_t queue = init_pq(SIZE);
 
     for(int i = 0; i < n; i++) {
@@ -52,9 +52,9 @@ void dijkstra(graph_t* gr, int n, int da, int db) { // n = rows*columns
             dij[i].odl = 999999999;
     }
     
-    d_t tmp;
+    queue_elem_t tmp;
     while( not_empty_pq(queue) ) {
-        d_t act = pop_from_pq(queue);
+        queue_elem_t act = pop_from_pq(queue);
         for(int j = 0; j < 4; j++) {
             if( gr[act.k].edg[j] != NULL ) {
                 if( dij[act.k].odl + gr[act.k].val_edg[j] < dij[ gr[act.k].edg[j]->node ].odl ) {
